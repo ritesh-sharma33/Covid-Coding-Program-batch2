@@ -1,23 +1,54 @@
-
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:boilerplate/second_screen.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'styles.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Boilerplate App',
       home: MyHomePage(),
+      routes: {'/second': (context) => SecondScreen()},
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
+  Future<AudioPlayer> playSound() async {
+    AudioCache cache = new AudioCache();
+    return await cache.play("sounds/facebook_sound.mp3");
+  }
 
   @override
   Widget build(BuildContext context) {
+    _buildTextWidget(String text) {
+      return Text(text, style: headerTextStyle);
+    }
+
+    _buildCard() {
+      return Card(
+        child: Column(
+          children: <Widget>[
+            Icon(
+              Icons.phone_iphone,
+              color: Colors.black,
+              size: 100,
+            ),
+            Text(
+              "This is a dummy iPhone",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Boilerplate App"),
@@ -27,52 +58,40 @@ class MyHomePage extends StatelessWidget {
         alignment: Alignment.center,
         child: Column(
           children: <Widget>[
-            Text(
-              "Hello and welcome here...",
-              style: TextStyle(
-                color: Colors.blueGrey,
-                fontSize: 25,
-                fontWeight: FontWeight.bold
-              ),
-            ),
+            _buildTextWidget("Hello and welcome here..."),
             SizedBox(
               height: 20,
             ),
-            Card(
-              child: Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.phone_iphone,
-                    color: Colors.black,
-                    size: 100,
-                  ),
-                  Text(
-                    "This is a dummy iPhone",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                    ),
-                  )
-                ],
-              ),
-            ),
+            _buildCard(),
             SizedBox(
               height: 20,
             ),
             RaisedButton(
               color: Colors.red,
-              child: Text(
-                "Click me to see the magic",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20
-                ),
-              ),
+              child: Text("Click me to see the magic", style: buttonTextStyle),
               onPressed: () {
-                
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => SecondScreen()
+                //   )
+                // )
+
+                // Navigator.pushNamed(context, '/second');
+
+                // Navigator.pushReplacement(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => SecondScreen()
+                //   )
+                // );
+
+                Navigator.pushReplacementNamed(context, '/second');
               },
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Image.asset(
               "assets/images/setup.jpg",
               height: 200,
