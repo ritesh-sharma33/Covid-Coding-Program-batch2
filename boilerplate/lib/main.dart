@@ -1,5 +1,6 @@
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:boilerplate/rest-api.dart';
 import 'package:boilerplate/second_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -85,8 +86,12 @@ class MyHomePage extends StatelessWidget {
                 //     builder: (context) => SecondScreen()
                 //   )
                 // );
-
-                Navigator.pushReplacementNamed(context, '/second');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RestApiDemo()
+                  )
+                );
               },
             ),
             SizedBox(

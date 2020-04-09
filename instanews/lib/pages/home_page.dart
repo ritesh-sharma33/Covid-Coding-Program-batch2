@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:instanews/models/post.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -6,6 +10,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  String url = "http://newsapi.org/v2/top-headlines?apiKey=33b24be8d9404eef8fed1bee30c73f2f&country=in";
+  bool isLoaded = false;
+
+  List<Post> posts = List();
+
+  Future<void> _fetchData() async {
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        
+        posts = (data["articles"] as List).map((post) {
+          return Post.fromJSON(post);
+        }).toList();
+
+        setState(() {
+          this.isLoaded = true;
+        });
+      }
+    } catch(e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() { 
+    _fetchData();
+    super.initState();
+  }
+
   _buildCardTitle(String text) {
     return Text(
       text,
@@ -22,25 +57,23 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildNewsCard() {
+  _buildNewsCard(Post post) {
     return Card(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Image.asset("assets/images/setup.jpg"),
+          Image.network(post.image),
           SizedBox(
             height: 10,
           ),
           Padding(
             padding: EdgeInsets.only(left: 8),
-            child: _buildCardTitle(
-                "New PC setup done today at my workplace. It's an awesome experience"),
+            child: _buildCardTitle(post.title),
           ),
           Padding(
             padding: EdgeInsets.only(left: 8, top: 5),
-            child: _buildCardSubtitle(
-                "New PC with 32 gigs of RAM and 4 TB of storage. It took me around 36 hours to do so. "),
+            child: _buildCardSubtitle(post.description),
           ),
           SizedBox(
             height: 10,
@@ -50,7 +83,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: EdgeInsets.only(left: 5),
                 child: Text(
-                  "7 Apr 2020",
+                  post.publishedAt.toString(),
                   style: TextStyle(color: Colors.blue, fontSize: 15),
                 ),
               ),
@@ -58,7 +91,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: EdgeInsets.only(right: 5),
                 child: Text(
-                  "John Doe",
+                  post.author,
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.blue[800]
@@ -99,16 +132,14 @@ class _HomePageState extends State<HomePage> {
         title: Text("InstaNews"),
         centerTitle: true,
       ),
-      body: Container(
-        child: Padding(
-            padding: EdgeInsets.all(1),
-            child: ListView.builder(
-              itemCount: 20,
-              itemBuilder: (context, index) {
-                return _buildNewsCard();
-              },
-            )),
-      ),
+      body: isLoaded == true
+        ? ListView.builder(
+            itemCount: posts.length,
+            itemBuilder: (context, index) {
+              return _buildNewsCard(posts[index]);
+            }
+          )
+        : Center(child: CircularProgressIndicator(),)
     );
   }
 }
