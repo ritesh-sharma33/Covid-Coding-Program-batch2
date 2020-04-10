@@ -20,7 +20,10 @@ class Post {
       description: json['description'] != null ? json['description'] : '',
       url: json['url'] != null ? json['url'] : '',
       image: json['urlToImage'] != null ? json['urlToImage'] : '',
-      publishedAt: json['publishedAt'] != null ? json['publishedAt'] : ''
+      publishedAt: (json['publishedAt'] != null ? json['publishedAt'] : '')
+                      .toString()
+                      .replaceAll("T", " ")
+                      .replaceAll("Z", "")
     );
   }
 }
