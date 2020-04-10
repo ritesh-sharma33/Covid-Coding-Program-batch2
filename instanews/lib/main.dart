@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:instanews/pages/profile_page.dart';
+import 'package:instanews/pages/splash_page.dart';
 import './pages/home_page.dart';
 
 void main() => runApp(MyApp());
@@ -9,7 +11,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'InstaNews',
-      home: HomePage(),
+      home: SplashPage(),
+      routes: {
+        '/myprofile': (context) => ProfilePage()
+      },
     );
   }
 }

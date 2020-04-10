@@ -203,12 +203,18 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(
+            color: Colors.grey
+          ),
           title: Text(
             "InstaNews",
             style: TextStyle(
                 fontFamily: 'Raleway',
                 fontWeight: FontWeight.bold,
-                fontSize: 25),
+                fontSize: 25,
+                color: Colors.blueAccent),
           ),
           centerTitle: true,
         ),

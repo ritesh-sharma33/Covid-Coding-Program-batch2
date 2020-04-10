@@ -26,7 +26,7 @@ class DrawerWidget extends StatelessWidget {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: AssetImage("assets/images/profile.png"))),
+                            image: AssetImage("assets/images/profile_pic.jpg"))),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -53,13 +53,16 @@ class DrawerWidget extends StatelessWidget {
       );
     }
 
-    _buildListTile(String title, Icon icon) {
+    _buildListTile(String title, Icon icon, String route) {
       return ListTile(
         leading: icon,
         title: Text(
           title,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
+        onTap: () {
+          if (route != '') Navigator.pushNamed(context, route);
+        },
       );
     }
 
@@ -70,19 +73,19 @@ class DrawerWidget extends StatelessWidget {
           SizedBox(
             height: 10.0,
           ),
-          _buildListTile("My Profile", Icon(Icons.perm_identity, color: Colors.blueAccent,)),
+          _buildListTile("My Profile", Icon(Icons.perm_identity, color: Colors.blueAccent), '/myprofile'),
           SizedBox(height: 5.0,),
-          _buildListTile("Saved News", Icon(Icons.bookmark_border, color: Colors.blueAccent,)),
+          _buildListTile("Saved News", Icon(Icons.bookmark_border, color: Colors.blueAccent,), ''),
           SizedBox(height: 5.0,),
-          _buildListTile("Settings", Icon(Icons.settings, color: Colors.blueAccent,)),
+          _buildListTile("Settings", Icon(Icons.settings, color: Colors.blueAccent,), ''),
           SizedBox(height: 5.0,),
-          _buildListTile("Activities", Icon(Icons.info_outline, color: Colors.blueAccent,)),
+          _buildListTile("Sources", Icon(Icons.info_outline, color: Colors.blueAccent,), ''),
           SizedBox(height: 5.0,),
-          _buildListTile("Help Centre", Icon(Icons.help, color: Colors.blueAccent,)),
+          _buildListTile("Help Centre", Icon(Icons.help, color: Colors.blueAccent,), ''),
           SizedBox(height: 5.0,),
-          _buildListTile("Contact Us", Icon(Icons.contacts, color: Colors.blueAccent,)),
+          _buildListTile("Contact Us", Icon(Icons.contacts, color: Colors.blueAccent,), ''),
           SizedBox(height: 5.0,),
-          _buildListTile("About Us", Icon(Icons.info, color: Colors.blueAccent,)),
+          _buildListTile("About Us", Icon(Icons.info, color: Colors.blueAccent,), ''),
           SizedBox(height: 5.0,),
         ],
       ),
