@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instanews/pages/profile_page.dart';
+import 'package:instanews/pages/sources_page.dart';
 import 'package:instanews/pages/splash_page.dart';
 import './pages/home_page.dart';
 
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
       title: 'InstaNews',
       home: SplashPage(),
       routes: {
-        '/myprofile': (context) => ProfilePage()
+        '/myprofile': (context) => ProfilePage(),
+        '/sources': (context) => SourcesPage()
       },
     );
   }

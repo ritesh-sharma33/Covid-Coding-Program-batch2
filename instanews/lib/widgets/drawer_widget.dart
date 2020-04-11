@@ -79,7 +79,7 @@ class DrawerWidget extends StatelessWidget {
           SizedBox(height: 5.0,),
           _buildListTile("Settings", Icon(Icons.settings, color: Colors.blueAccent,), ''),
           SizedBox(height: 5.0,),
-          _buildListTile("Sources", Icon(Icons.info_outline, color: Colors.blueAccent,), ''),
+          _buildListTile("Sources", Icon(Icons.info_outline, color: Colors.blueAccent,), '/sources'),
           SizedBox(height: 5.0,),
           _buildListTile("Help Centre", Icon(Icons.help, color: Colors.blueAccent,), ''),
           SizedBox(height: 5.0,),

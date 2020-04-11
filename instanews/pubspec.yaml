@@ -50,7 +50,9 @@ flutter:
    - assets/images/profile.png
    - assets/images/profile_pic.jpg
    - assets/images/news.gif
-   
+   - assets/images/news_icon.png
+   - assets/images/sources/
+
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
