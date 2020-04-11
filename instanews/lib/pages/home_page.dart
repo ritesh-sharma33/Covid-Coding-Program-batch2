@@ -6,6 +6,8 @@ import 'package:instanews/models/post.dart';
 import 'package:instanews/pages/webview.dart';
 import 'package:instanews/widgets/drawer_widget.dart';
 import 'package:share/share.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as p;
 
 class HomePage extends StatefulWidget {
   @override
@@ -65,6 +67,18 @@ class _HomePageState extends State<HomePage> {
           fontSize: 15,
           fontFamily: 'Raleway'),
     );
+  }
+
+  Future _saveNews(Post post) async {
+    final Future<Database> database =
+        openDatabase(p.join(await getDatabasesPath(), 'instanews.db'),
+            onCreate: (db, version) async {
+      await db.execute(
+          "CREATE TABLE news(id TEXT, title TEXT, description TEXT, image TEXT, author TEXT, name TEXT, url TEXT, publishedAt TEXT)");
+    }, version: 1);
+
+    final Database db = await database;
+    return db.insert('news', Post.toMap(post));
   }
 
   _buildNewsCard(Post post) {
@@ -182,7 +196,24 @@ class _HomePageState extends State<HomePage> {
                 ),
                 IconButton(
                   icon: Icon(Icons.bookmark_border),
-                  onPressed: () {},
+                  onPressed: () {
+                    _saveNews(post);
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: new Text("Success"),
+                            content: new Text("Post Saved Successfully..."),
+                            actions: <Widget>[
+                              new FlatButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text("OK"))
+                            ],
+                          );
+                        });
+                  },
                 ),
                 IconButton(
                   icon: Icon(Icons.share),
@@ -205,9 +236,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
-          iconTheme: IconThemeData(
-            color: Colors.grey
-          ),
+          iconTheme: IconThemeData(color: Colors.grey),
           title: Text(
             "InstaNews",
             style: TextStyle(

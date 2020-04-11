@@ -75,7 +75,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           _buildListTile("My Profile", Icon(Icons.perm_identity, color: Colors.blueAccent), '/myprofile'),
           SizedBox(height: 5.0,),
-          _buildListTile("Saved News", Icon(Icons.bookmark_border, color: Colors.blueAccent,), ''),
+          _buildListTile("Saved News", Icon(Icons.bookmark_border, color: Colors.blueAccent,), '/savedNews'),
           SizedBox(height: 5.0,),
           _buildListTile("Settings", Icon(Icons.settings, color: Colors.blueAccent,), ''),
           SizedBox(height: 5.0,),
