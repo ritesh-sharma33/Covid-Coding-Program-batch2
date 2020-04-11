@@ -8,6 +8,7 @@ import 'package:instanews/widgets/drawer_widget.dart';
 import 'package:share/share.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
+import 'search_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -234,6 +235,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => SearchPage()
+                  )
+                );
+              },
+            )
+          ],
           elevation: 0,
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.grey),
