@@ -26,4 +26,17 @@ class Post {
                       .replaceAll("Z", "")
     );
   }
+
+  static toMap(Post post) {
+    return {
+      'id': post.id,
+      'title': post.title,
+      'description': post.description,
+      'image': post.image,
+      'author': post.author,
+      'name': post.name,
+      'url': post.url,
+      'publishedAt': post.publishedAt
+    };
+  }
 }

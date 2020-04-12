@@ -26,6 +26,7 @@ dependencies:
   http:
   flutter_webview_plugin: 0.3.11
   share:
+  sqflite:
 
 dev_dependencies:
   flutter_test:

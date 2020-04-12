@@ -3,9 +3,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:instanews/models/post.dart';
+import 'search_page.dart';
 import 'package:instanews/pages/webview.dart';
 import 'package:instanews/widgets/drawer_widget.dart';
 import 'package:share/share.dart';
+import 'package:sqflite/sqflite.dart';
+
+import 'package:path/path.dart' as p;
 
 class HomePage extends StatefulWidget {
   @override
@@ -182,7 +186,26 @@ class _HomePageState extends State<HomePage> {
                 ),
                 IconButton(
                   icon: Icon(Icons.bookmark_border),
-                  onPressed: () {},
+                  onPressed: () {
+                    _savePost(post);
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: new Text("Success"),
+                          content: new Text("Post saved successfully..."),
+                          actions: <Widget>[
+                            new FlatButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }, 
+                              child: Text("OK")
+                            )
+                          ],
+                        );
+                      }
+                    );
+                  },
                 ),
                 IconButton(
                   icon: Icon(Icons.share),
@@ -199,10 +222,37 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Future _savePost(Post post) async {
+    final Future<Database> database = openDatabase(p.join(await getDatabasesPath(), 'instanews.db'),
+      onCreate: (db, version) async {
+        await db.execute(
+          "CREATE TABLE news(id TEXT, title TEXT, description TEXT, image TEXT, author TEXT, name TEXT, url TEXT, publishedAt TEXT)"
+        );
+      }, version: 1
+    );
+
+    final Database db = await database;
+    return db.insert('news', Post.toMap(post));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              color: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => SearchPage()
+                  )
+                );
+              },
+            ),
+          ],
           title: Text(
             "InstaNews",
             style: TextStyle(
